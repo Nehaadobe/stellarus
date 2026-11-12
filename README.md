@@ -15,6 +15,11 @@ The first cell contains the quotation. Subsequent cells contain optional
 attribution. Existing rich-text nodes and links are moved, not recreated. Portrait
 images are not part of this POC's authoring contract.
 
+The first attribution link, when supplied, identifies the quotation's source and
+sets the semantic `blockquote[cite]` URL. Without a source link, `cite` is omitted.
+This is the POC's second shared release: it makes the update observable without
+changing customer styling.
+
 Sites may override `--quote-color` and `--quote-text-align` in their local quote
 CSS. Font sizes inherit the site's existing tokens. No shared global stylesheet
 or customer configuration is imported.
@@ -30,7 +35,8 @@ python3 -m http.server 3101 --bind 127.0.0.1
 Open <http://127.0.0.1:3101/shared/tests/quote.html?rum=off>.
 The page runs the real EDS block loader and reports failures visibly and in the
 console. It covers shared CSS loading, rich text, links, extra attribution rows,
-omitted attribution, and an empty block. Check narrow and wide viewports too.
+quotation-source metadata, omitted attribution/source, and an empty block. Check
+narrow and wide viewports too.
 
 Lint shared code explicitly: the boilerplate's CSS lint script does not include
 the subtree.
