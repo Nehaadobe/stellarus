@@ -10,6 +10,8 @@ export default function decorate(block) {
   if (quotation) {
     const blockquote = document.createElement('blockquote');
     blockquote.className = 'quote-quotation';
+    const source = attributions.map((cell) => cell.querySelector('a[href]')).find(Boolean);
+    if (source) blockquote.cite = source.href;
     blockquote.append(...quotation.childNodes);
     figure.append(blockquote);
   }
