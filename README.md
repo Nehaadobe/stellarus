@@ -71,6 +71,14 @@ quotation-source metadata, omitted attribution/source, an empty block, local
 Columns fallback, section callbacks, and repeat loading. Check narrow and wide
 viewports too.
 
+The fixture now includes the new Notice block, an empty Notice, and the shared
+Quote attribution update. Both are received through the subtree without adding a
+consumer adapter. To exercise the real page entry point and fragments, open
+`/shared/tests/full-blocks.html?rum=off`; Quote and Notice must render in the page
+and inside the fragment while the local Columns block continues working. A plain
+static server does not supply authored `/nav` or `/footer` documents; use an AEM
+development server with previewed content for a full site chrome check.
+
 Lint shared code explicitly: the boilerplate's CSS lint script does not include
 the subtree.
 
