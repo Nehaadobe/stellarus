@@ -11,4 +11,5 @@
 
 .quote .quote-attribution {
   font-size: var(--body-font-size-s);
+  font-style: italic;
 }

@@ -4,9 +4,10 @@ import { loadBlock, loadSection, loadSections } from '../../scripts/block-loader
 async function runTests() {
   const results = document.getElementById('results');
   try {
-    const blocks = [...document.querySelectorAll('.quote, .columns')];
+    const blocks = [...document.querySelectorAll('.quote, .columns, .notice')];
     const strong = document.querySelector('#full strong');
     const link = document.querySelector('#full a');
+    const noticeLink = document.querySelector('#notice a');
     blocks.forEach(decorateBlock);
     const section = document.querySelector('.section');
     let callbackCount = 0;
@@ -19,6 +20,11 @@ async function runTests() {
     const full = document.getElementById('full');
     const single = document.getElementById('single');
     const empty = document.getElementById('empty');
+    const colorProbe = document.createElement('span');
+    colorProbe.style.backgroundColor = 'var(--light-color)';
+    document.body.append(colorProbe);
+    const expectedNoticeColor = getComputedStyle(colorProbe).backgroundColor;
+    colorProbe.remove();
     const checks = [
       ['figure structure', full.querySelector(':scope > figure > blockquote')],
       ['rich text identity', full.querySelector('blockquote strong') === strong],
@@ -34,6 +40,12 @@ async function runTests() {
       ['section callback once', callbackCount === 1],
       ['all sections loaded', [...document.querySelectorAll('.section')].every((el) => el.dataset.sectionStatus === 'loaded')],
       ['shared stylesheet once', document.querySelectorAll('link[href$="/shared/blocks/quote/quote.css"]').length === 1],
+      ['notice structure', document.querySelector('#notice > aside.notice-content')],
+      ['notice link identity', document.querySelector('#notice > aside a') === noticeLink],
+      ['empty notice', document.querySelector('#notice-empty > aside')?.childNodes.length === 0],
+      ['notice shared CSS', getComputedStyle(document.querySelector('#notice > aside')).backgroundColor
+        === expectedNoticeColor],
+      ['shared quote update', getComputedStyle(full.querySelector('figcaption')).fontStyle === 'italic'],
     ];
     const originalFigure = full.firstElementChild;
     await Promise.all([loadBlock(full), loadBlock(full)]);

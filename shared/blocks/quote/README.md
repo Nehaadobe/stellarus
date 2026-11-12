@@ -12,4 +12,7 @@ The shared loader loads this directory's JS and CSS directly. No consumer
 `blocks/quote/quote.js` adapter is required. Optional customer CSS can override
 `--quote-color` and `--quote-text-align`.
 
+Attribution uses the site's small body font size and italic styling. Customer
+theme styles still load after these shared defaults.
+
 See the [shared workflow](../../README.md).
