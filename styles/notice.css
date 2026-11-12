@@ -1,5 +1,0 @@
-.notice .notice-content {
-  background-color: var(--notice-background, var(--light-color));
-  color: var(--text-color);
-  overflow-wrap: anywhere;
-}
