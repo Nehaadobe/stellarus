@@ -1,0 +1,14 @@
+.quote {
+  color: var(--quote-color, var(--text-color));
+  text-align: var(--quote-text-align, start);
+  overflow-wrap: anywhere;
+}
+
+.quote .quote-figure,
+.quote .quote-quotation {
+  margin: 0;
+}
+
+.quote .quote-attribution {
+  font-size: var(--body-font-size-s);
+}
