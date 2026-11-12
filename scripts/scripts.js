@@ -6,11 +6,10 @@ import {
   decorateBlocks,
   decorateTemplateAndTheme,
   waitForFirstImage,
-  loadSection,
-  loadSections,
   loadCSS,
   buildBlock,
 } from './aem.js';
+import { loadSection, loadSections } from './block-loader.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -166,7 +165,12 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    try {
+      await loadSection(main.querySelector('.section'), waitForFirstImage);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to load first section', error);
+    }
   }
 
   try {

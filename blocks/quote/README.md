@@ -3,6 +3,10 @@
 This block delegates to Blueshield's locally adopted shared decorator. It does not
 load code from another website or change the core EDS loader.
 
+This JS adapter is retained for compatibility. With the full-block loader enabled,
+Quote loads directly from `shared/blocks/quote`; only this directory's site-owned
+CSS is loaded as an optional theme override. New shared blocks need no adapter.
+
 Author a one-column table:
 
 | Quote |

@@ -11,7 +11,7 @@ import {
 
 import {
   loadSections,
-} from '../../scripts/aem.js';
+} from '../../scripts/block-loader.js';
 
 /**
  * Loads a fragment.
