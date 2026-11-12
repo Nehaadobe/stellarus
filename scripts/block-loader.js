@@ -34,7 +34,13 @@ export default function createBlockLoader({ localBlocks = [], styles = {} } = {}
           loadStylesheet(new URL(`${blockName}.css`, directory).href),
           import(new URL(`${blockName}.js`, directory).href),
         ]);
-        if (styles[blockName]) await loadStylesheet(styles[blockName]);
+        if (styles[blockName]) {
+          // The customer theme file is optional: a missing file must not fail the block.
+          await loadStylesheet(styles[blockName]).catch(() => {
+            // eslint-disable-next-line no-console
+            console.warn(`Optional theme styles for "${blockName}" could not be loaded`);
+          });
+        }
         if (typeof module.default !== 'function') {
           throw new Error(`Shared block "${blockName}" has no default decorator`);
         }

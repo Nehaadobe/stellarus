@@ -1,7 +1,7 @@
 # Shared Quote
 
-The complete block is distributed in the subtree. Its decorator reuses the shared
-quote helper; all implementation dependencies remain inside `shared`.
+The complete block is distributed in the subtree and is self-contained: its JS and
+CSS live in this directory with no helper imports.
 
 Author a one-column table headed `Quote`. The first content row is the quotation.
 Subsequent rows are optional attribution. Rich text, existing nodes, and links
