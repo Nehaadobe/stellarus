@@ -89,6 +89,37 @@ the subtree.
 
 ## Export and consume
 
+### Simple client demo commands
+
+Commit the base changes first. Stay on the POC development branch, not the export
+branch. In Blueshield:
+
+```sh
+npm run lint:shared
+npm run shared:export
+```
+
+In Stellarus, with a clean worktree and `shared-base` pointing to Blueshield:
+
+```sh
+npm run shared:update
+npm run lint:shared
+```
+
+Use GitHub Desktop to push each site's POC branch. Export/pull distributes code;
+it does not push the consumer branch, change DA content, or publish a live site.
+The first delivery of the full-block setup also needs both sites' one-time loader
+integration pushed; exporting the shared folder alone is not enough.
+
+If Terminal cannot authenticate, run `npm run shared:prepare` in Blueshield.
+Then use GitHub Desktop to select `shared-export` and Publish branch / Push origin.
+Return to the POC branch afterwards. The prepare command is local only; it does
+not upload anything. Terminal authentication is still required for a private
+consumer pull, and normal GitHub permissions apply to all remote operations.
+
+Each package owns its npm scripts; they are outside the subtree. Future shared
+blocks require only shared changes, not additional package commands.
+
 After reviewed changes are committed on the base's approved release branch:
 
 ```sh
