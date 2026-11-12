@@ -7,7 +7,9 @@
     "lint:js": "eslint .",
     "lint:css": "stylelint \"blocks/**/*.css\" \"styles/*.css\"",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:fix": "npm run lint:js -- --fix && npm run lint:css -- --fix"
+    "lint:fix": "npm run lint:js -- --fix && npm run lint:css -- --fix",
+    "lint:shared": "eslint scripts/block-loader.js shared && stylelint \"shared/**/*.css\"",
+    "shared:update": "git subtree pull --prefix=shared shared-base shared-export -m \"chore(shared): update shared blocks\""
   },
   "repository": {
     "type": "git",
