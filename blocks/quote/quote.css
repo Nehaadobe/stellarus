@@ -1,0 +1,4 @@
+.quote {
+  --quote-color: var(--link-color);
+  --quote-text-align: center;
+}
