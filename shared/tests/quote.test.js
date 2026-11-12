@@ -1,15 +1,20 @@
-import { decorateBlock, loadBlock } from '../../scripts/aem.js';
+import { decorateBlock } from '../../scripts/aem.js';
+import { loadBlock, loadSection, loadSections } from '../../scripts/block-loader.js';
 
 async function runTests() {
   const results = document.getElementById('results');
   try {
-    const blocks = [...document.querySelectorAll('.quote')];
+    const blocks = [...document.querySelectorAll('.quote, .columns')];
     const strong = document.querySelector('#full strong');
     const link = document.querySelector('#full a');
-    await Promise.all(blocks.map(async (block) => {
-      decorateBlock(block);
-      await loadBlock(block);
-    }));
+    blocks.forEach(decorateBlock);
+    const section = document.querySelector('.section');
+    let callbackCount = 0;
+    await Promise.all([
+      loadSection(section, () => { callbackCount += 1; }),
+      loadSection(section),
+    ]);
+    await loadSections(document.querySelector('main'));
 
     const full = document.getElementById('full');
     const single = document.getElementById('single');
@@ -25,7 +30,14 @@ async function runTests() {
       ['empty block', empty.querySelector('figure') && !empty.querySelector('blockquote, figcaption')],
       ['shared CSS', getComputedStyle(full.querySelector('figure')).marginTop === '0px'],
       ['all blocks loaded', blocks.every((block) => block.dataset.blockStatus === 'loaded')],
+      ['local block fallback', document.getElementById('local').classList.contains('columns-2-cols')],
+      ['section callback once', callbackCount === 1],
+      ['all sections loaded', [...document.querySelectorAll('.section')].every((el) => el.dataset.sectionStatus === 'loaded')],
+      ['shared stylesheet once', document.querySelectorAll('link[href$="/shared/blocks/quote/quote.css"]').length === 1],
     ];
+    const originalFigure = full.firstElementChild;
+    await Promise.all([loadBlock(full), loadBlock(full)]);
+    checks.push(['loaded block is not decorated again', full.firstElementChild === originalFigure]);
     const failed = checks.filter(([, passed]) => !passed).map(([name]) => name);
     if (failed.length) throw new Error(`Failed: ${failed.join(', ')}`);
     results.dataset.status = 'passed';
